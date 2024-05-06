@@ -1,4 +1,11 @@
-# rmirro
+# rmirro fork
+
+This is a quick hack from [hersle/rmirro](https://github.com/hersle/rmirro) with a drop-in replacement for notify-send from [bkw777/notice.sh](https://github.com/bkw777/notice.sh).
+
+In recent versions of Ubuntu notify-send doesn't support several of the options used by this project (including --print-id).
+To make it work this fork edit `rmirro.py` to make it call the replacement of `notify-send`.
+
+
 
 ![Screenshot](screenshot.png)
 
