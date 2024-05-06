@@ -54,15 +54,14 @@ class Logger:
 
     # Create desktop notification if notify-send is installed
     def notify(self, text, urgency="normal", icon="input-tablet"):
-        if shutil.which("notify-send") is not None:
-            title = f"Synchronizing reMarkable"
-            cmd  = ["notify-send"]
-            cmd += ["--print-id"] # print an ID that identifies the notification 
-            cmd += [f"--replace-id={self.id}"] if self.id else [] # replace existing notification, instead of creating a new one every time
-            cmd += [f"--app-name=rmirro", f"--urgency={urgency}", f"--icon={icon}"]
-            cmd += [title, text]
-            output = pc_run(cmd)
-            self.id = int(output) # save ID of notification, so we can replace it later
+        title = f"Synchronizing reMarkable"
+        cmd  = [os.path.join(os.path.dirname(os.path.realpath(__file__)), "notify-send.sh")]
+        cmd += ["--print-id"] # print an ID that identifies the notification 
+        cmd += [f"--replace-id={self.id}"] if self.id else [] # replace existing notification, instead of creating a new one every time
+        cmd += [f"--app-name=rmirro", f"--urgency={urgency}", f"--icon={icon}"]
+        cmd += [title, text]
+        output = pc_run(cmd)
+        self.id = self.id if self.id else int(output) # save ID of notification, so we can replace it later
 
     # Common interface for printing a log message, both to console and in a notification
     def log(self, text, urgency="normal", console=True, notification=True):
